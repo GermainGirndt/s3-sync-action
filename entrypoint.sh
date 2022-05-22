@@ -52,9 +52,9 @@ else
 fi
 
 echo "Production: "
-echo $PRODUCTION_BUCKET
+echo $AWS_S3_BUCKET
 echo "Staging: "
-echo $STAGING_BUCKET
+echo $AWS_S3_STAGING_BUCKET
     
 echo "Bucket to be used: $AWS_S3_BUCKET_TO_BE_USED"
 
