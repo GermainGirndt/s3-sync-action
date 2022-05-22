@@ -2,11 +2,10 @@
 
 set -e
 
-echo ${GITHUB_REF##*/}
-echo "1"
-echo $BRANCH
-echo "2"
-echo "Production value: $IS_PRODUCTION"
+BRANCH=${GITHUB_REF##*/}
+echo "Brach name: $BRANCH"
+[[ $BRANCH = "production" ]] && IS_PRODUCTION="true" || IS_PRODUCTION=false
+echo "IS_PRODUCTION: $IS_PRODUCTION"
 
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
