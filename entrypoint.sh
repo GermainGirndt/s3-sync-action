@@ -41,10 +41,10 @@ fi
 
 # Sets the AWS_S3_BUCKET going to be used (production/staging bucket)
 if [ "$IS_PRODUCTION" == "true" ] ; then
-    AWS_S3_BUCKET_TO_BE_USED=$PRODUCTION_BUCKET
+    AWS_S3_BUCKET_TO_BE_USED=$AWS_S3_BUCKET
     echo "production!"
 elif [ "$IS_PRODUCTION" == "false" ] ; then
-    AWS_S3_BUCKET_TO_BE_USED=$STAGING_BUCKET
+    AWS_S3_BUCKET_TO_BE_USED=$AWS_S3_STAGING_BUCKET
     echo "staging!"
 else
     echo "IS_PRODUCTION must be 'true' or 'false'. Found: $IS_PRODUCTION"
@@ -67,8 +67,6 @@ ${AWS_SECRET_ACCESS_KEY}
 ${AWS_REGION}
 text
 EOF
-
-aws s3 ls
 
 # Sync using our dedicated profile and suppress verbose messages.
 # All other flags are optional via the `args:` directive.
