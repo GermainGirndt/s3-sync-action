@@ -12,11 +12,21 @@ if [ -z "$AWS_S3_BUCKET" ]; then
   exit 1
 fi
 
+if [ -z "$AWS_CLOUDFRONT" ]; then
+  echo "AWS_CLOUDFRONT is not set. Quitting."
+  exit 1
+fi
 
 if [ -z "$AWS_S3_STAGING_BUCKET" ]; then
   echo "AWS_S3_STAGING_BUCKET is not set. Quitting."
   exit 1
 fi
+
+if [ -z "$AWS_CLOUDFRONT_STAGING" ]; then
+  echo "AWS_CLOUDFRONT_STAGING is not set. Quitting."
+  exit 1
+fi
+
 
 if [ -z "$AWS_ACCESS_KEY_ID" ]; then
   echo "AWS_ACCESS_KEY_ID is not set. Quitting."
@@ -38,18 +48,21 @@ if [ -n "$AWS_S3_ENDPOINT" ]; then
   ENDPOINT_APPEND="--endpoint-url $AWS_S3_ENDPOINT"
 fi
 
-
 # Sets the AWS_S3_BUCKET going to be used (production/staging bucket)
 if [ "$IS_PRODUCTION" == "true" ] ; then
     AWS_S3_BUCKET_TO_BE_USED=$AWS_S3_BUCKET
+    AWS_CLOUDFRONT_TO_BE_USED=$AWS_CLOUDFRONT
     echo "production!"
 elif [ "$IS_PRODUCTION" == "false" ] ; then
     AWS_S3_BUCKET_TO_BE_USED=$AWS_S3_STAGING_BUCKET
+    AWS_S3_BUCKET_TO_BE_USED=$AWS_CLOUDFRONT_STAGING
     echo "staging!"
 else
     echo "IS_PRODUCTION must be 'true' or 'false'. Found: $IS_PRODUCTION"
     exit 1
 fi
+
+
 
 echo "Production: "
 echo $AWS_S3_BUCKET
