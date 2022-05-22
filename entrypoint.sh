@@ -89,8 +89,14 @@ sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET_TO_BE_USED}/${DEST_DIR}
               --profile s3-sync-action \
               --no-progress \
               ${ENDPOINT_APPEND} $*"
+echo "S3 Sync Success!"
 
-sh -c "aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_TO_BE_USED --paths \"/*\""
+sh -c "aws cloudfront create-invalidation  \
+           --distribution-id $AWS_CLOUDFRONT_TO_BE_USED \
+           --paths \"/*\" \
+           --no-progress"
+           
+echo "CloudFront Invalidation Success!"
 
 # Clear out credentials after we're done.
 # We need to re-run `aws configure` with bogus input instead of
