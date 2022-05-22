@@ -3,7 +3,9 @@
 set -e
 
 echo ${GITHUB_REF##*/}
+echo "1"
 echo $BRANCH
+echo "2"
 echo "Production value: $IS_PRODUCTION"
 
 if [ -z "$AWS_S3_BUCKET" ]; then
@@ -14,11 +16,6 @@ fi
 
 if [ -z "$AWS_S3_STAGING_BUCKET" ]; then
   echo "AWS_S3_STAGING_BUCKET is not set. Quitting."
-  exit 1
-fi
-
-if [ -z "$IS_PRODUCTION" ]; then
-  echo "IS_PRODUCTION flag is not set. Quitting."
   exit 1
 fi
 
