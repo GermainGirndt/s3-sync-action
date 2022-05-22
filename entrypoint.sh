@@ -2,7 +2,7 @@
 
 set -e
 
-echo $GITHUB_BASE_REF
+echo ${GITHUB_REF##*/}
 echo $BRANCH
 
 if [ -z "$AWS_S3_BUCKET" ]; then
@@ -17,7 +17,7 @@ if [ -z "$AWS_S3_STAGING_BUCKET" ]; then
 fi
 
 if [ -z "$IS_PRODUCTION" ]; then
-  echo "IS_STAGING flag is not set. Quitting."
+  echo "IS_PRODUCTION flag is not set. Quitting."
   exit 1
 fi
 
