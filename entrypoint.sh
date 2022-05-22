@@ -55,7 +55,7 @@ if [ "$IS_PRODUCTION" == "true" ] ; then
     echo "production!"
 elif [ "$IS_PRODUCTION" == "false" ] ; then
     AWS_S3_BUCKET_TO_BE_USED=$AWS_S3_STAGING_BUCKET
-    AWS_S3_BUCKET_TO_BE_USED=$AWS_CLOUDFRONT_STAGING
+    AWS_CLOUDFRONT_TO_BE_USED=$AWS_CLOUDFRONT_STAGING
     echo "staging!"
 else
     echo "IS_PRODUCTION must be 'true' or 'false'. Found: $IS_PRODUCTION"
@@ -66,8 +66,10 @@ fi
 
 echo "Production: "
 echo $AWS_S3_BUCKET
+echo $AWS_CLOUDFRONT
 echo "Staging: "
 echo $AWS_S3_STAGING_BUCKET
+echo $AWS_CLOUDFRONT_STAGING
     
 echo "Bucket to be used: $AWS_S3_BUCKET_TO_BE_USED"
 
@@ -87,6 +89,8 @@ sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET_TO_BE_USED}/${DEST_DIR}
               --profile s3-sync-action \
               --no-progress \
               ${ENDPOINT_APPEND} $*"
+
+sh -c "cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_TO_BE_USED --paths \"/\*\""
 
 # Clear out credentials after we're done.
 # We need to re-run `aws configure` with bogus input instead of
