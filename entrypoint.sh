@@ -7,6 +7,17 @@ if [ -z "$AWS_S3_BUCKET" ]; then
   exit 1
 fi
 
+
+if [ -z "$AWS_S3_STAGING_BUCKET" ]; then
+  echo "AWS_S3_STAGING_BUCKET is not set. Quitting."
+  exit 1
+fi
+
+if [ -z "$IS_PRODUCTION" ]; then
+  echo "IS_STAGING flag is not set. Quitting."
+  exit 1
+fi
+
 if [ -z "$AWS_ACCESS_KEY_ID" ]; then
   echo "AWS_ACCESS_KEY_ID is not set. Quitting."
   exit 1
@@ -27,6 +38,21 @@ if [ -n "$AWS_S3_ENDPOINT" ]; then
   ENDPOINT_APPEND="--endpoint-url $AWS_S3_ENDPOINT"
 fi
 
+
+# Sets the AWS_S3_BUCKET going to be used (production/staging bucket)
+if [ "$IS_PRODUCTION" == "true" ] ; then
+    AWS_S3_BUCKET_TO_BE_USED=$PRODUCTION_BUCKET
+    echo "production!"
+elif [ "$IS_PRODUCTION" == "false" ] ; then
+    AWS_S3_BUCKET_TO_BE_USED=$STAGING_BUCKET
+    echo "staging!"
+else
+    echo "IS_PRODUCTION must be 'true' or 'false'"
+    exit 1
+fi
+
+echo "Bucket to be used: $AWS_S3_BUCKET_TO_BE_USED"
+
 # Create a dedicated profile for this action to avoid conflicts
 # with past/future actions.
 # https://github.com/jakejarvis/s3-sync-action/issues/1
@@ -39,7 +65,7 @@ EOF
 
 # Sync using our dedicated profile and suppress verbose messages.
 # All other flags are optional via the `args:` directive.
-sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET}/${DEST_DIR} \
+sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET_TO_BE_USED}/${DEST_DIR} \
               --profile s3-sync-action \
               --no-progress \
               ${ENDPOINT_APPEND} $*"
