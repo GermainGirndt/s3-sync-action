@@ -6,7 +6,7 @@ LABEL "com.github.actions.icon"="refresh-cw"
 LABEL "com.github.actions.color"="green"
 
 LABEL version="0.5.1"
-LABEL repository="https://github.com/jakejarvis/s3-sync-action"
+LABEL repository="https://github.com/GermainGirndt/s3-sync-action"
 LABEL homepage="https://jarv.is/"
 LABEL maintainer="Jake Jarvis <jake@jarv.is>"
 
