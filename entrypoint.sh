@@ -68,6 +68,8 @@ ${AWS_REGION}
 text
 EOF
 
+aws s3 ls
+
 # Sync using our dedicated profile and suppress verbose messages.
 # All other flags are optional via the `args:` directive.
 sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET_TO_BE_USED}/${DEST_DIR} \
