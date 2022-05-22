@@ -2,6 +2,9 @@
 
 set -e
 
+echo $GITHUB_BASE_REF
+echo $BRANCH
+
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
   exit 1
