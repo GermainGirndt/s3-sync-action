@@ -4,6 +4,7 @@ set -e
 
 echo ${GITHUB_REF##*/}
 echo $BRANCH
+echo "Production value: $IS_PRODUCTION"
 
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
