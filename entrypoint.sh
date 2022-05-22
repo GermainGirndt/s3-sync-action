@@ -50,7 +50,7 @@ elif [ "$IS_PRODUCTION" == "false" ] ; then
     AWS_S3_BUCKET_TO_BE_USED=$STAGING_BUCKET
     echo "staging!"
 else
-    echo "IS_PRODUCTION must be 'true' or 'false'"
+    echo "IS_PRODUCTION must be 'true' or 'false'. Found: $IS_PRODUCTION"
     exit 1
 fi
 
