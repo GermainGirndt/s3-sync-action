@@ -93,8 +93,7 @@ echo "S3 Sync Success!"
 
 sh -c "aws cloudfront create-invalidation  \
            --distribution-id $AWS_CLOUDFRONT_TO_BE_USED \
-           --paths \"/*\" \
-           --no-progress"
+           --paths \"/*\" "
            
 echo "CloudFront Invalidation Success!"
 
